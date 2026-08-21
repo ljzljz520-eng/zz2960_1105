@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "metrics": {
+    "production_loc": 2375,
+    "production_files": 41,
+    "production_packages": 15,
+    "test_files": 23,
+    "production_functions": 196,
+    "decision_points": 333
+  },
+  "persistence": {
+    "module": "go.etcd.io/bbolt",
+    "entities": ["Batch", "Record", "AuditEvent", "CollaborationNote", "ExportSnapshot"],
+    "reopen_test": "TestPersistenceSurvivesReopen"
+  },
+  "workflows": [
+    {"steps": ["register batch and sticker candidates", "review divisibility outcomes", "confirm independently checked records", "archive the confirmed batch"], "test": "TestWorkflowCreateReviewArchive"},
+    {"steps": ["search by label or status", "select a versioned batch", "update with optimistic version checking", "publish a deterministic confirmed export"], "test": "TestWorkflowSearchUpdatePublish"},
+    {"steps": ["parse deterministic input rows", "validate numbers and divisibility rules", "persist valid records and audit import", "produce stable counts and warnings"], "test": "TestWorkflowImportReport"}
+  ]
+}
